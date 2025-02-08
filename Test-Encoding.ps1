@@ -7,6 +7,8 @@
     encoding-verifier v2.0.0.
 
     This script will verify that there's no UTF-8 BOM or CRLF line endings in the files inside of the project.
+
+    https://github.com/ForNeVeR/encoding-verifier
 #>
 param (
     # Path to the repository root. All text files under the root will be checked for UTF-8 BOM and CRLF.
