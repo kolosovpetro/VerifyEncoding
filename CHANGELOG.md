@@ -12,7 +12,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased] (2.0.0)
 ### Changed
-- **(Breaking change! A small one, though.)** The default directory for the source root is now determined through the call of `git`.
+- **(Breaking change! A small one, though.)** The default directory for the source root is now determined through the Git invocation.
+- Terminate on Git invocation errors.
 
 ## [1.0.0] - 2025-02-08
 This is the initial release as a separate project, after the script has been used in several repositories.

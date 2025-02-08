@@ -24,7 +24,7 @@ $ErrorActionPreference = 'Stop'
 if (!$SourceRoot) {
     $SourceRoot = git rev-parse --show-toplevel
     if (!$?) {
-        throw "Cannot call git rev-parse --show-toplevel: exit code $LASTEXITCODE."
+        throw "Cannot call `"git rev-parse`": exit code $LASTEXITCODE."
     }
 }
 
@@ -32,11 +32,19 @@ if (!$SourceRoot) {
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
 
 $allFiles = git -c core.quotepath=off ls-tree -r HEAD --name-only
+if (!$?) {
+    throw "Cannot call `"git ls-tree`": exit code $LASTEXITCODE."
+}
 Write-Output "Total files in the repository: $($allFiles.Length)"
 
 # https://stackoverflow.com/questions/6119956/how-to-determine-if-git-handles-a-file-as-binary-or-as-text#comment15281840_6134127
 $nullHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
-$textFiles = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @allFiles |
+$textFiles = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @allFiles
+if (!$?) {
+    throw "Cannot call `"git ls-tree`": exit code $LASTEXITCODE."
+}
+
+$textFiles = $textFiles |
     Where-Object { -not $_.StartsWith('-') } |
     ForEach-Object { [Regex]::Unescape($_.Split("`t", 3)[2]) }
 Write-Output "Text files in the repository: $($textFiles.Length)"
