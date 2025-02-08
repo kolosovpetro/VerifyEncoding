@@ -1,9 +1,11 @@
-# SPDX-FileCopyrightText: 2020–2025 Friedrich von Never <friedrich@fornever.me>
+# SPDX-FileCopyrightText: 2020-2025 Friedrich von Never <friedrich@fornever.me>
 #
 # SPDX-License-Identifier: MIT
 
 <#
 .SYNOPSIS
+    encoding-verifier v1.0.0.
+
     This script will verify that there's no UTF-8 BOM or CRLF line endings in the files inside of the project.
 #>
 param (
