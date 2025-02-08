@@ -1,0 +1,44 @@
+# SPDX-FileCopyrightText: 2024-2025 Friedrich von Never <friedrich@fornever.me>
+#
+# SPDX-License-Identifier: MIT
+name: Release
+on:
+  push:
+    branches:
+    - main
+    tags:
+    - v*
+  pull_request:
+    branches:
+    - main
+  schedule:
+  - cron: 0 0 * * 6
+  workflow_dispatch:
+jobs:
+  nuget:
+    permissions:
+      contents: write
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v4
+      - id: version
+        name: Get version
+        shell: pwsh
+        run: echo "version=$(scripts/Get-Version.ps1 -RefName $env:GITHUB_REF)" >> $env:GITHUB_OUTPUT
+      - name: Read changelog
+        uses: ForNeVeR/ChangelogAutomation.action@v2
+        with:
+          output: ./release-notes.md
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: ./release-notes.md
+      - if: startsWith(github.ref, 'refs/tags/v')
+        name: Create a release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: ./release-notes.md
+          name: encoding-verifier v${{ steps.version.outputs.version }}
+          files: |-
+            ./Test-Encoding.ps1

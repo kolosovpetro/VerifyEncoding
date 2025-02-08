@@ -11,7 +11,9 @@ This is a script to verify file encodings. It will ensure that none text files i
 Usage
 -----
 ### Installation
-It is currently recommended to just copy the script to your repo.
+It is currently recommended to just copy the `Test-Encoding.ps1` script to your repo.
+
+If you seek for a particular released version, go to the [Releases][releases] section.
 
 ### Local Run
 ```console
@@ -53,5 +55,6 @@ The license indication in the project's sources is compliant with the [REUSE spe
 [docs.contributing]: CONTRIBUTING.md
 [docs.license]: LICENSE.txt
 [docs.maintaining]: MAINTAINING.md
+[releases]: https://github.com/ForNeVeR/encoding-verifier/releases
 [reuse.spec]: https://reuse.software/spec-3.3/
 [status-terrid]: https://img.shields.io/badge/status-terrid-green.svg
