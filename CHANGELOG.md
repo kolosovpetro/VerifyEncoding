@@ -16,6 +16,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Terminate on Git invocation errors.
 - Split files for passing into `git ls-files` into chunks (support huge file lists).
 
+### Added
+- Add new parameter: `-ExcludedExtensions`, with a list of file extensions to ignore during the check.
+
 ## [1.0.0] - 2025-02-08
 This is the initial release as a separate project, after the script has been used in several repositories.
 

@@ -17,12 +17,14 @@ If you seek for a particular released version, go to the [Releases][releases] se
 
 ### Local Run
 ```console
-$ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix]
+$ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions]
+    <String[]>]
 ```
 
 Where
 - `SourceRoot` is the directory where the script will look for the files. By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
 - `-Autofix` will apply fixes to all the problematic files.
+- `-ExcludeExtensions` allows passing an array of file extensions (case-insensitive) that will be ignored during the check. The default list is `@('.dotsettings')`
 
 ### CI
 Add the following block to your CI script (here I'll use GitHub Actions, but it's possible to adapt to any other CI provider):
