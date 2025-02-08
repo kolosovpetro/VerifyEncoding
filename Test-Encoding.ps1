@@ -37,16 +37,24 @@ if (!$?) {
 }
 Write-Output "Total files in the repository: $($allFiles.Length)"
 
+$counter = [pscustomobject] @{ Value = 0 }
+$groupSize = 50
+$chunks = $allFiles | Group-Object -Property { [math]::Floor($counter.Value++ / $groupSize) }
+Write-Output "Split into $($chunks.Count) chunks."
+
 # https://stackoverflow.com/questions/6119956/how-to-determine-if-git-handles-a-file-as-binary-or-as-text#comment15281840_6134127
 $nullHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
-$textFiles = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @allFiles
-if (!$?) {
-    throw "Cannot call `"git ls-tree`": exit code $LASTEXITCODE."
+$textFiles = $chunks | ForEach-Object {
+    $chunk = $_.Group
+    $filePaths = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @chunk
+    if (!$?) {
+        throw "Cannot call `"git diff`": exit code $LASTEXITCODE."
+    }
+    $filePaths |
+        Where-Object { -not $_.StartsWith('-') } |
+        ForEach-Object { [Regex]::Unescape($_.Split("`t", 3)[2]) }
 }
 
-$textFiles = $textFiles |
-    Where-Object { -not $_.StartsWith('-') } |
-    ForEach-Object { [Regex]::Unescape($_.Split("`t", 3)[2]) }
 Write-Output "Text files in the repository: $($textFiles.Length)"
 
 $bom = @(0xEF, 0xBB, 0xBF)

@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Changed
 - **(Breaking change! A small one, though.)** The default directory for the source root is now determined through the Git invocation.
 - Terminate on Git invocation errors.
+- Split files for passing into `git ls-files` into chunks (support huge file lists).
 
 ## [1.0.0] - 2025-02-08
 This is the initial release as a separate project, after the script has been used in several repositories.
