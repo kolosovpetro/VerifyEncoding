@@ -19,6 +19,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ### Added
 - Add new parameter: `-ExcludedExtensions`, with a list of file extensions to ignore during the check.
 
+### Fixed
+- Fixed file list calculation if running from alternate source root.
+
 ## [1.0.0] - 2025-02-08
 This is the initial release as a separate project, after the script has been used in several repositories.
 
