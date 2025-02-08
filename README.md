@@ -17,8 +17,7 @@ If you seek for a particular released version, go to the [Releases][releases] se
 
 ### Local Run
 ```console
-$ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions]
-    <String[]>]
+$ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
 ```
 
 Where
