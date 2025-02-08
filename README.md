@@ -10,6 +10,8 @@ This is a script to verify file encodings. It will ensure that none text files i
 
 Usage
 -----
+### Installation
+It is currently recommended to just copy the script to your repo.
 
 ### Local Run
 ```console
