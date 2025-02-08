@@ -8,7 +8,9 @@
 #>
 param (
     # Path to the repository root. All text files under the root will be checked for UTF-8 BOM and CRLF.
-    $SourceRoot = "$PSScriptRoot/..",
+    #
+    # By default, the script will consider the parent of the script directory as the source root.
+    [string] $SourceRoot = "$PSScriptRoot/..",
 
     # Makes the script to perform file modifications to bring them to the standard.
     [switch] $Autofix
