@@ -15,7 +15,7 @@ on:
   - cron: 0 0 * * 6
   workflow_dispatch:
 jobs:
-  nuget:
+  release:
     permissions:
       contents: write
     runs-on: ubuntu-22.04
