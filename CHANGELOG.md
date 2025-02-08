@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-# [1.0.0] - 2025-02-08
+## [1.0.0] - 2025-02-08
 This is the initial release as a separate project, after the script has been used in several repositories.
 
 The development has been started in 2020, the earlier history of the script could be [tracked via the xaml-math repository](https://github.com/ForNeVeR/xaml-math/commits/f5a0d9303825337d87f69250152620903c6a37ca/scripts/verify-encoding.ps1).
