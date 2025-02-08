@@ -21,7 +21,7 @@ $ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix]
 ```
 
 Where
-- `SourceRoot` is the directory where the script will look for the files. By default, the script will consider the parent of the script directory as the source root.
+- `SourceRoot` is the directory where the script will look for the files. By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
 - `-Autofix` will apply fixes to all the problematic files.
 
 ### CI

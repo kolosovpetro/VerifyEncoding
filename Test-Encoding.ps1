@@ -11,8 +11,8 @@
 param (
     # Path to the repository root. All text files under the root will be checked for UTF-8 BOM and CRLF.
     #
-    # By default, the script will consider the parent of the script directory as the source root.
-    [string] $SourceRoot = "$PSScriptRoot/..",
+    # By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
+    [string] $SourceRoot,
 
     # Makes the script to perform file modifications to bring them to the standard.
     [switch] $Autofix
@@ -20,6 +20,13 @@ param (
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
+
+if (!$SourceRoot) {
+    $SourceRoot = git rev-parse --show-toplevel
+    if (!$?) {
+        throw "Cannot call git rev-parse --show-toplevel: exit code $LASTEXITCODE."
+    }
+}
 
 # For PowerShell to properly process the UTF-8 output from git ls-tree we need to set up the output encoding:
 [Console]::OutputEncoding = [Text.Encoding]::UTF8
