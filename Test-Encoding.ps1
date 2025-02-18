@@ -40,7 +40,7 @@ if (!$SourceRoot) {
 
 try {
     Push-Location $SourceRoot
-    $allFiles = git -c core.quotepath=off ls-tree -r HEAD --name-only
+    [array] $allFiles = git -c core.quotepath=off ls-tree -r HEAD --name-only
     if (!$?) {
         throw "Cannot call `"git ls-tree`": exit code $LASTEXITCODE."
     }
@@ -77,6 +77,8 @@ try {
 
         $fullPath = Resolve-Path -LiteralPath $file
         $bytes = [IO.File]::ReadAllBytes($fullPath) | Select-Object -First $bom.Length
+        if (!$bytes) { continue } # filter empty files
+
         $bytesEqualsBom = @(Compare-Object $bytes $bom -SyncWindow 0).Length -eq 0
         if ($bytesEqualsBom -and $Autofix) {
             $fullContent = [IO.File]::ReadAllBytes($fullPath)

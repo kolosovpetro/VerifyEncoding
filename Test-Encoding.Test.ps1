@@ -14,10 +14,10 @@ BeforeAll {
             if (!$?) { throw "Error code from git init: $LASTEXITCODE." }
 
             foreach ($fileName in $files.Keys) {
-               $text = $files[$fileName]
-               Set-Content -LiteralPath $fileName -Value $text -NoNewline
-               git add $fileName
-               if (!$?) { throw "Error code from git add: $LASTEXITCODE." }
+                $text = $files[$fileName]
+                Set-Content -LiteralPath $fileName -Value $text -NoNewline
+                git add $fileName
+                if (!$?) { throw "Error code from git add: $LASTEXITCODE." }
             }
 
             git commit --all --message 'Initial commit' | Out-Host
@@ -39,6 +39,8 @@ Describe 'Test-Encoding' {
         $? | Should -Be $true
         $output | Should -Be @(
             'Total files in the repository: 1'
+            'Split into 1 chunks.'
+            'Text files in the repository: 14'
         )
     }
 }
