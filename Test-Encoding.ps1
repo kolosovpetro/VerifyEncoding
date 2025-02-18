@@ -4,7 +4,7 @@
 
 <#
 .SYNOPSIS
-    encoding-verifier v2.0.0.
+    encoding-verifier v2.0.1.
 
     This script will verify that there's no UTF-8 BOM or CRLF line endings in the files inside of the project.
 
