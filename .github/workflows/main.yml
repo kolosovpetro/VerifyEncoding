@@ -14,6 +14,24 @@ on:
   - cron: 0 0 * * 6
   workflow_dispatch:
 jobs:
+  test:
+    strategy:
+      matrix:
+        image:
+          - macos-14
+          - ubuntu-24.04
+          - windows-2022
+      fail-fast: false
+    runs-on: ${{ matrix.image }}
+    steps:
+      - name: Check out the sources
+        uses: actions/checkout@v4
+      - name: Install Pester
+        shell: pwsh
+        run: Install-Module Pester -Version 5.7.1 -Force
+      - name: Run tests
+        shell: pwsh
+        run: Import-Module Pester -PassThru && Invoke-Pester -Output Detailed ./Test-Encoding.Test.ps1
   licenses:
     runs-on: ubuntu-24.04
     steps:

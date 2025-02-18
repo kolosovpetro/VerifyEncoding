@@ -6,10 +6,27 @@ SPDX-License-Identifier: MIT
 
 Contributor Guide
 =================
-<!-- REUSE-IgnoreStart -->
+Run Tests
+---------
+Execute the following steps in a PowerShell Core session.
+
+1. Install [Pester][pester]:
+   ```console
+   $ Install-Module Pester -Force
+   ```
+   (see the Pester version we use in `.github/workflows/main.yml`)
+2. Import Pester:
+   ```console
+   $ Import-Module Pester -PassThru
+   ```
+3. Run the tests:
+   ```console
+   $ Invoke-Pester -Output Detailed ./Test-Encoding.Test.ps1
+   ```
 
 License Automation
 ------------------
+<!-- REUSE-IgnoreStart -->
 If the CI asks you to update the file licenses, follow one of these:
 1. Update the headers manually (look at the existing files), something like this:
    ```
@@ -24,7 +41,7 @@ If the CI asks you to update the file licenses, follow one of these:
    ```
 
 (Feel free to attribute the changes to "encoding-verifier contributors <https://github.com/ForNeVeR/encoding-verifier>" instead of your name in a multi-author file, or if you don't want your name to be mentioned in the project's source: this doesn't mean you'll lose the copyright.)
-
-[reuse]: https://reuse.software/
-
 <!-- REUSE-IgnoreEnd -->
+
+[pester]: https://pester.dev/
+[reuse]: https://reuse.software/
