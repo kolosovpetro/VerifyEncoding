@@ -20,7 +20,9 @@ BeforeAll {
                 if (!$?) { throw "Error code from git add: $LASTEXITCODE." }
             }
 
-            git commit --all --message 'Initial commit' | Out-Host
+            git -c 'user.name=Test User' `
+                -c 'user.email=test@example.com' `
+                commit --all --message 'Initial commit' | Out-Host
             if (!$?) { throw "Error code from git commit: $LASTEXITCODE." }
         } finally {
             Pop-Location
