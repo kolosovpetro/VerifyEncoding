@@ -39,6 +39,19 @@ jobs:
 ```
 Script will generate a non-zero exit code in case there's a validation error, and list all the files with issues.
 
+### Import module locally
+
+From the root of repository run:
+
+- Import-Module .\TestEncoding\TestEncoding.psd1
+- Get-Command -Module TestEncoding
+
+### Release to PowerShell Gallery
+
+- Set `PWSH_GALLERY_KEY` with your API key
+- Test-ModuleManifest .\TestEncoding\TestEncoding.psd1
+- Publish-Module -Path '.\TestEncoding' -Repository PSGallery -NuGetApiKey $env:PWSH_GALLERY_KEY -Verbose
+
 Documentation
 -------------
 - [Changelog][docs.changelog]
