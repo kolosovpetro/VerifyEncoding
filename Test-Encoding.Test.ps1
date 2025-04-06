@@ -3,28 +3,43 @@
 # SPDX-License-Identifier: MIT
 
 BeforeAll {
-    function PrepareGitRepo($files) {
+    function PrepareGitRepo($files)
+    {
         $repoPath = New-TemporaryFile
         Remove-Item $repoPath
         New-Item -Type Directory $repoPath | Out-Null
+        Import-Module $PSScriptRoot\TestEncoding\TestEncoding.psd1
 
         Push-Location $repoPath
-        try {
+        try
+        {
             git init . | Out-Host
-            if (!$?) { throw "Error code from git init: $LASTEXITCODE." }
+            if (!$?)
+            {
+                throw "Error code from git init: $LASTEXITCODE."
+            }
 
-            foreach ($fileName in $files.Keys) {
+            foreach ($fileName in $files.Keys)
+            {
                 $text = $files[$fileName]
                 Set-Content -LiteralPath $fileName -Value $text -NoNewline
                 git add $fileName
-                if (!$?) { throw "Error code from git add: $LASTEXITCODE." }
+                if (!$?)
+                {
+                    throw "Error code from git add: $LASTEXITCODE."
+                }
             }
 
             git -c 'user.name=Test User' `
                 -c 'user.email=test@example.com' `
                 commit --all --message 'Initial commit' | Out-Host
-            if (!$?) { throw "Error code from git commit: $LASTEXITCODE." }
-        } finally {
+            if (!$?)
+            {
+                throw "Error code from git commit: $LASTEXITCODE."
+            }
+        }
+        finally
+        {
             Pop-Location
         }
 
@@ -37,7 +52,7 @@ Describe 'Test-Encoding' {
         $repoPath = PrepareGitRepo @{
             'empty-file.txt' = ''
         }
-        $output = ./Test-Encoding.ps1 -SourceRoot $repoPath
+        $output = Test-Encoding -SourceRoot $repoPath
         $? | Should -Be $true
         $output | Should -Be @(
             'Total files in the repository: 1'
