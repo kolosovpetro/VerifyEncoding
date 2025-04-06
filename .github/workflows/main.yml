@@ -44,6 +44,10 @@ jobs:
     steps:
     - name: Check out the repository
       uses: actions/checkout@v4
+
     - name: Verify encoding
       shell: pwsh
-      run: ./Test-Encoding.ps1
+      run: |
+        Import-Module .\TestEncoding\TestEncoding.psd1
+        Get-Command -Module TestEncoding
+        Test-Encoding
