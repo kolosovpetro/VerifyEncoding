@@ -35,12 +35,14 @@ If the CI asks you to update the file licenses, follow one of these:
    # SPDX-License-Identifier: MIT
    ```
    (accommodate to the file's comment style if required).
-2. Alternately, use [REUSE][reuse] tool:
+2. Alternately, use the [REUSE][reuse] tool:
    ```console
    $ reuse annotate --license MIT --copyright '%your name% <%your contact info, e.g. email%>' %file names to annotate%
    ```
 
-(Feel free to attribute the changes to "encoding-verifier contributors <https://github.com/ForNeVeR/encoding-verifier>" instead of your name in a multi-author file, or if you don't want your name to be mentioned in the project's source: this doesn't mean you'll lose the copyright.)
+(Feel free to attribute the changes to "VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>"
+instead of your name in a multi-author file,
+or if you don't want your name to be mentioned in the project's source: this doesn't mean you'll lose the copyright.)
 <!-- REUSE-IgnoreEnd -->
 
 [pester]: https://pester.dev/

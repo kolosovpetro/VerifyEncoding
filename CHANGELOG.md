@@ -10,9 +10,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] (2.1.0)
+### Changed
+- The project has been published to the PowerShell Gallery as a module.
+- The project has been renamed to VerifyEncoding (to correspond to the published module name).
+
 ## [2.0.1] - 2025-02-18
 ### Fixed
-- [#7: Breaks on empty files](https://github.com/ForNeVeR/encoding-verifier/issues/7).
+- [#7: Breaks on empty files](https://github.com/ForNeVeR/VerifyEncoding/issues/7).
 - No longer incorrectly process repositories with only one file.
 
 ## [2.0.0] - 2025-02-09

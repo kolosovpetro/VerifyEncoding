@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2024-2025 Friedrich von Never <friedrich@fornever.me>
+SPDX-FileCopyrightText: 2024-2025 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
 
 SPDX-License-Identifier: MIT
 -->
@@ -15,3 +15,9 @@ Publish a New Version
 4. Set the project version in `Test-Encoding.ps1`.
 5. Merge the aforementioned changes via a pull request.
 6. Push a tag in form of `v<VERSION>`, e.g. `v0.0.0`.
+
+Release to PowerShell Gallery
+-----------------------------
+- Set `PWSH_GALLERY_KEY` with your API key
+- `Test-ModuleManifest .\VerifyEncoding\VerifyEncoding.psd1`
+- `Publish-Module -Path '.\VerifyEncoding' -Repository PSGallery -NuGetApiKey $env:PWSH_GALLERY_KEY -Verbose`

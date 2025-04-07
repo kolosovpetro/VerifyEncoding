@@ -3,12 +3,13 @@
 # SPDX-License-Identifier: MIT
 
 BeforeAll {
+    Import-Module "$PSScriptRoot/VerifyEncoding/VerifyEncoding.psd1" -Force
+
     function PrepareGitRepo($files)
     {
         $repoPath = New-TemporaryFile
         Remove-Item $repoPath
         New-Item -Type Directory $repoPath | Out-Null
-        Import-Module $PSScriptRoot\VerifyEncoding\VerifyEncoding.psd1
 
         Push-Location $repoPath
         try
@@ -47,7 +48,7 @@ BeforeAll {
     }
 }
 
-Describe 'Test-Encoding' {
+Describe 'Test-Encoding Command' {
     It 'Should properly scan an empty file' {
         $repoPath = PrepareGitRepo @{
             'empty-file.txt' = ''
