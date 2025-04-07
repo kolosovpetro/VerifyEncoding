@@ -8,7 +8,7 @@ BeforeAll {
         $repoPath = New-TemporaryFile
         Remove-Item $repoPath
         New-Item -Type Directory $repoPath | Out-Null
-        Import-Module $PSScriptRoot\TestEncoding\TestEncoding.psd1
+        Import-Module $PSScriptRoot\VerifyEncoding\VerifyEncoding.psd1
 
         Push-Location $repoPath
         try

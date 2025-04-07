@@ -43,14 +43,14 @@ Script will generate a non-zero exit code in case there's a validation error, an
 
 From the root of repository run:
 
-- Import-Module .\TestEncoding\TestEncoding.psd1
-- Get-Command -Module TestEncoding
+- `Import-Module .\VerifyEncoding\VerifyEncoding.psd1`
+- `Get-Command -Module VerifyEncoding`
 
 ### Release to PowerShell Gallery
 
 - Set `PWSH_GALLERY_KEY` with your API key
-- Test-ModuleManifest .\TestEncoding\TestEncoding.psd1
-- Publish-Module -Path '.\TestEncoding' -Repository PSGallery -NuGetApiKey $env:PWSH_GALLERY_KEY -Verbose
+- `Test-ModuleManifest .\VerifyEncoding\VerifyEncoding.psd1`
+- `Publish-Module -Path '.\VerifyEncoding' -Repository PSGallery -NuGetApiKey $env:PWSH_GALLERY_KEY -Verbose`
 
 Documentation
 -------------

@@ -48,6 +48,6 @@ jobs:
     - name: Verify encoding
       shell: pwsh
       run: |
-        Import-Module .\TestEncoding\TestEncoding.psd1
-        Get-Command -Module TestEncoding
+        Import-Module .\VerifyEncoding\VerifyEncoding.psd1
+        Get-Command -Module VerifyEncoding
         Test-Encoding
