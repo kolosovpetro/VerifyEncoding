@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2025 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
+#
+# SPDX-License-Identifier: MIT
+
 @{
     RootModule = 'VerifyEncoding.psm1'
     ModuleVersion = '2.0.1'
