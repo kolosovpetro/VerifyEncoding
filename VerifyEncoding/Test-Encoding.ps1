@@ -4,28 +4,32 @@
 
 <#
 .SYNOPSIS
-    encoding-verifier v2.0.1.
-
-    This script will verify that there's no UTF-8 BOM or CRLF line endings in the files inside of the project.
-
-    https://github.com/ForNeVeR/encoding-verifier
+    This function will verify that there's no UTF-8 BOM or CRLF line endings in the files inside of the project.
 #>
+
+param (
+    [string] $SourceRoot,
+    [switch] $Autofix,
+    [string[]] $ExcludeExtensions = @(
+        '.dotsettings'
+    )
+)
 
 function Test-Encoding
 {
     param (
-    # Path to the repository root. All text files under the root will be checked for UTF-8 BOM and CRLF.
-    #
-    # By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
+        # Path to the repository root. All text files under the root will be checked for UTF-8 BOM and CRLF.
+        #
+        # By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
         [string] $SourceRoot,
 
-    # Makes the script to perform file modifications to bring them to the standard.
+        # Makes the script to perform file modifications to bring them to the standard.
         [switch] $Autofix,
 
-    # List of file extensions (with leading dots) to ignore. Case-insensitive.
+        # List of file extensions (with leading dots) to ignore. Case-insensitive.
         [string[]] $ExcludeExtensions = @(
-        '.dotsettings'
-    )
+            '.dotsettings'
+        )
     )
 
     Set-StrictMode -Version Latest
@@ -132,4 +136,8 @@ function Test-Encoding
     {
         Pop-Location
     }
+}
+
+if ($MyInvocation.MyCommand.Name -eq 'Test-Encoding.ps1') {
+    Test-Encoding -SourceRoot:$SourceRoot -Autofix:$Autofix -ExcludedExtensions:$ExcludeExtensions
 }
