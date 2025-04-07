@@ -41,4 +41,4 @@ jobs:
           body_path: ./release-notes.md
           name: VerifyEncoding v${{ steps.version.outputs.version }}
           files: |-
-            ./Test-Encoding.ps1
+            ./VerifyEncoding/Test-Encoding.ps1
