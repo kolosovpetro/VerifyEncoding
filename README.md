@@ -17,7 +17,7 @@ Usage
 $ Install-Module VerifyEncoding -Repository PSGallery -Scope CurrentUser
 ```
 
-Then use as PowerShell command:
+Then use as a PowerShell function:
 ```
 $ Import-Module VerifyEncoding
 $ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
@@ -51,7 +51,7 @@ jobs:
     # […]
     - name: Verify encoding
       shell: pwsh
-      run: Install-Module VerifyEncoding -Repository PSGallery -Version 3.0.1 && Test-Encoding <parameters go here>
+      run: Install-Module VerifyEncoding -Repository PSGallery -Version 2.1.0 && Test-Encoding <parameters go here>
 ```
 This command will generate a non-zero exit code in case there's a validation error and list all the files with issues.
 

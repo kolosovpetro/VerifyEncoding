@@ -48,7 +48,7 @@ BeforeAll {
     }
 }
 
-Describe 'Test-Encoding Command' {
+Describe 'Test-Encoding function' {
     It 'Should properly scan an empty file' {
         $repoPath = PrepareGitRepo @{
             'empty-file.txt' = ''

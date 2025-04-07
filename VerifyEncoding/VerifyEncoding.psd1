@@ -4,7 +4,7 @@
 
 @{
     RootModule = 'VerifyEncoding.psm1'
-    ModuleVersion = '2.0.1'
+    ModuleVersion = '2.1.0'
     GUID = 'b7e60ad7-bfa0-43fa-a7b6-3a06de3f8f74'
     Author = 'Friedrich von Never <friedrich@fornever.me> et. all'
     CompanyName = 'github.com/ForNeVeR/encoding-verifier'
