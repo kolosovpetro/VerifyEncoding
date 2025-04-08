@@ -4,7 +4,8 @@ SPDX-FileCopyrightText: 2025 VerifyEncoding contributors <https://github.com/For
 SPDX-License-Identifier: MIT
 -->
 
-VerifyEncoding [![Status Terrid][status-terrid]][andivionian-status-classifier]
+VerifyEncoding [![Status Terrid][status-terrid]][andivionian-status-classifier] [![PowerShell Gallery Version][badge.powershell-gallery]][install.powershell-gallery]
+
 ==============
 This is a script to verify file encodings. It will ensure that none text files in the repository (identified as text by Git) have `\r\n` line endings or UTF-8 BOM attached to them.
 
@@ -12,7 +13,7 @@ Usage
 -----
 ### Installation
 #### Option 1: PowerShell Gallery
-[Install the module from the PowerShell Gallery][install.gallery]:
+[Install the module from the PowerShell Gallery][install.powershell-gallery]:
 ```console
 $ Install-Module VerifyEncoding -Repository PSGallery -Scope CurrentUser
 ```
@@ -68,11 +69,12 @@ The project is distributed under the terms of [the MIT license][docs.license].
 The license indication in the project's sources is compliant with the [REUSE specification v3.3][reuse.spec].
 
 [andivionian-status-classifier]: https://andivionian.fornever.me/v1/#status-terrid-
+[badge.powershell-gallery]: https://img.shields.io/powershellgallery/v/VerifyEncoding
 [docs.changelog]: CHANGELOG.md
 [docs.contributing]: CONTRIBUTING.md
 [docs.license]: LICENSE.txt
 [docs.maintaining]: MAINTAINING.md
-[install.gallery]: https://www.powershellgallery.com/packages/VerifyEncoding
+[install.powershell-gallery]: https://www.powershellgallery.com/packages/VerifyEncoding
 [releases]: https://github.com/ForNeVeR/VerifyEncoding/releases
 [reuse.spec]: https://reuse.software/spec-3.3/
 [status-terrid]: https://img.shields.io/badge/status-terrid-green.svg
