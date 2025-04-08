@@ -108,13 +108,16 @@ function Test-Encoding
             }
 
             $fullPath = Resolve-Path -LiteralPath $file
+
             $bytes = [IO.File]::ReadAllBytes($fullPath) | Select-Object -First $bom.Length
+
             if (!$bytes)
             {
                 continue
             } # filter empty files
 
             $bytesEqualsBom = @(Compare-Object $bytes $bom -SyncWindow 0).Length -eq 0
+
             if ($bytesEqualsBom -and $Autofix)
             {
                 $fullContent = [IO.File]::ReadAllBytes($fullPath)
@@ -128,14 +131,33 @@ function Test-Encoding
             }
 
             $text = [IO.File]::ReadAllText($fullPath)
-            $hasWrongLineEndings = $text.Contains("`r`n")
-            if ($hasWrongLineEndings -and $Autofix)
+
+            $crlf = "`r`n"
+            $lf = "`n"
+            $cr = "`r"
+
+            $containsCrlf = $text.Contains($crlf)
+
+            if ($containsCrlf -and $Autofix)
             {
-                $newText = $text -replace "`r`n", "`n"
+                $newText = $text -replace $crlf, $lf
                 [IO.File]::WriteAllText($fullPath, $newText)
                 Write-Output "Fixed the line endings for file $file"
             }
-            elseif ($hasWrongLineEndings)
+            elseif ($containsCrlf)
+            {
+                $lineEndingErrors += @($file)
+            }
+
+            $containsCr = $text.Contains($cr)
+
+            if ($containsCr -and $Autofix)
+            {
+                $newText = $text -replace $cr, $lf
+                [IO.File]::WriteAllText($fullPath, $newText)
+                Write-Output "Fixed the line endings for file $file"
+            }
+            elseif ($containsCr)
             {
                 $lineEndingErrors += @($file)
             }
