@@ -24,7 +24,7 @@ $ Import-Module VerifyEncoding
 $ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
 ```
 
-#### Option 2: Quick Manual Deployment
+#### Option 2: Quick Script Deployment
 Copy the `VerifyEncoding/Test-Encoding.ps1` script to your repo (or get from [the Releases section][releases]),
 then use from any shell as
 ```console
@@ -32,6 +32,8 @@ $ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExten
 ```
 
 #### Option 3: Deploy Module From Sources
+Either clone the sources or download the latest module archive from [the Releases section][releases],
+and then run the following PowerShell commands:
 ```console
 $ Import-Module VerifyEncoding/VerifyEncoding.psd1
 $ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
