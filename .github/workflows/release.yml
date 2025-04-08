@@ -30,6 +30,14 @@ jobs:
         uses: ForNeVeR/ChangelogAutomation.action@v2
         with:
           output: ./release-notes.md
+      - name: Read text changelog
+        uses: ForNeVeR/ChangelogAutomation.action@v2
+        with:
+          format: PlainText
+          output: ./release-notes.txt
+      - name: Set up the module properties
+        shell: pwsh
+        run: Update-ModuleManifest VerifyEncoding/VerifyEncoding.psd1 -ReleaseNotes $(Get-Content -LiteralPath release-notes.txt -Raw)
 
       - name: Pack the module for upload
         shell: pwsh
