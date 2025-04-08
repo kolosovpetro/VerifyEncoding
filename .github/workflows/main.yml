@@ -52,4 +52,4 @@ jobs:
 
     - name: Verify encoding
       shell: pwsh
-      run: Import-Module VerifyEncoding/VerifyEncoding.psd1 && Test-Encoding
+      run: Import-Module ./VerifyEncoding/VerifyEncoding.psd1 && Test-Encoding

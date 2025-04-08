@@ -35,7 +35,7 @@ $ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExten
 Either clone the sources or download the latest module archive from [the Releases section][releases],
 and then run the following PowerShell commands:
 ```console
-$ Import-Module VerifyEncoding/VerifyEncoding.psd1
+$ Import-Module ./VerifyEncoding/VerifyEncoding.psd1
 $ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
 ```
 
