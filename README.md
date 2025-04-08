@@ -5,7 +5,6 @@ SPDX-License-Identifier: MIT
 -->
 
 VerifyEncoding [![Status Terrid][status-terrid]][andivionian-status-classifier] [![PowerShell Gallery Version][badge.powershell-gallery]][install.powershell-gallery]
-
 ==============
 This is a script to verify file encodings. It will ensure that none text files in the repository (identified as text by Git) have `\r\n` line endings or UTF-8 BOM attached to them.
 
