@@ -11,25 +11,25 @@ param (
     [string] $SourceRoot,
     [switch] $Autofix,
     [string[]] $ExcludeExtensions = @(
-    '.dotsettings'
-)
+        '.dotsettings'
+    )
 )
 
 function Test-Encoding
 {
     param (
-    # Path to the repository root. All text files under the root will be checked for UTF-8 BOM and CRLF.
-    #
-    # By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
+        # Path to the repository root. All text files under the root will be checked for UTF-8 BOM and CRLF.
+        #
+        # By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
         [string] $SourceRoot,
 
-    # Makes the script to perform file modifications to bring them to the standard.
+        # Makes the script to perform file modifications to bring them to the standard.
         [switch] $Autofix,
 
-    # List of file extensions (with leading dots) to ignore. Case-insensitive.
+        # List of file extensions (with leading dots) to ignore. Case-insensitive.
         [string[]] $ExcludeExtensions = @(
-        '.dotsettings'
-    )
+            '.dotsettings'
+        )
     )
 
     Set-StrictMode -Version Latest
@@ -58,8 +58,7 @@ function Test-Encoding
 
         $submodulesPath = "$SourceRoot/.gitmodules"
 
-        if (Test-Path $submodulesPath)
-        {
+        if (Test-Path $submodulesPath) {
             Write-Host "Filtering submodules ..."
             $submodules = (Get-Content $submodulesPath -Raw).Trim()
             $allFiles = $allFiles | Where-Object { $submodules -notmatch [Regex]::Escape($_) }
@@ -75,7 +74,6 @@ function Test-Encoding
 
         # https://stackoverflow.com/questions/6119956/how-to-determine-if-git-handles-a-file-as-binary-or-as-text#comment15281840_6134127
         $nullHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
-
         $textFiles = $chunks | ForEach-Object {
             $chunk = $_.Group
             $filePaths = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @chunk
@@ -150,7 +148,6 @@ function Test-Encoding
     }
 }
 
-if ($MyInvocation.MyCommand.Name -eq 'Test-Encoding.ps1')
-{
+if ($MyInvocation.MyCommand.Name -eq 'Test-Encoding.ps1') {
     Test-Encoding -SourceRoot:$SourceRoot -Autofix:$Autofix -ExcludedExtensions:$ExcludeExtensions
 }
