@@ -15,7 +15,8 @@ Publish a New Version
 4. Prepare a corresponding entry in the `CHANGELOG.md` file (usually by renaming the "Unreleased" section).
 5. Update the project version using the `scripts/Update-Version.ps1` script.
 6. Merge the aforementioned changes via a pull request.
-7. Push a tag in form of `v<VERSION>`, e.g. `v0.0.0`. The automation will do the rest.
+7. Check if the PowerShell Gallery key is still valid (follow the **Rotate the PowerShell Gallery Publishing Key** section if it isn't).
+8. Push a tag in form of `v<VERSION>`, e.g. `v0.0.0`. The automation will do the rest.
 
 Rotate the PowerShell Gallery Publishing Key
 --------------------------------------------
