@@ -99,6 +99,14 @@ function Test-Encoding
                 continue
             }
 
+            $fileExists = Test-Path -Path $file
+
+            if ($fileExists -eq $False)
+            {
+                Write-Host "File $file is deleted. Skipping ..."
+                continue
+            }
+
             $fullPath = Resolve-Path -LiteralPath $file
             $bytes = [IO.File]::ReadAllBytes($fullPath) | Select-Object -First $bom.Length
             if (!$bytes)
