@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2024-2025 Friedrich von Never <friedrich@fornever.me>
+# SPDX-FileCopyrightText: 2024-2025 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
 #
 # SPDX-License-Identifier: MIT
 name: Release
@@ -34,6 +34,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           path: ./release-notes.md
+
+      - if: startsWith(github.ref, 'refs/tags/v')
+        name: Upload the module to the PowerShell Gallery
+        shell: pwsh
+        run: Publish-Module -Path VerifyEncoding -Repository PSGallery -NuGetApiKey $env:POWERSHELL_GALLERY_KEY -Verbose
+        env:
+          POWERSHELL_GALLERY_KEY: ${{ secrets.POWERSHELL_GALLERY_KEY }}
+
       - if: startsWith(github.ref, 'refs/tags/v')
         name: Create a release
         uses: softprops/action-gh-release@v2

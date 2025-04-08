@@ -14,10 +14,18 @@ Publish a New Version
 3. Prepare a corresponding entry in the `CHANGELOG.md` file (usually by renaming the "Unreleased" section).
 4. Update the project version using the `scripts/Update-Version.ps1` script.
 5. Merge the aforementioned changes via a pull request.
-6. Push a tag in form of `v<VERSION>`, e.g. `v0.0.0`.
+6. Push a tag in form of `v<VERSION>`, e.g. `v0.0.0`. The automation will do the rest.
 
-Release to PowerShell Gallery
------------------------------
-- Set `PWSH_GALLERY_KEY` with your API key
-- `Test-ModuleManifest .\VerifyEncoding\VerifyEncoding.psd1`
-- `Publish-Module -Path '.\VerifyEncoding' -Repository PSGallery -NuGetApiKey $env:PWSH_GALLERY_KEY -Verbose`
+Rotate the PowerShell Gallery Publishing Key
+--------------------------------------------
+1. Sign in onto https://www.powershellgallery.com/.
+2. Go to the [API Keys][powershell-gallery.api-keys] section.
+3. Update the existing or create a new key named `verify-encoding.github` with a permission to **Push only new package versions** and only allowed to publish the package **VerifyEncoding**.
+
+   (If this is the first publication of a new package,
+   upload a temporary short-living key with permission to add new packages
+   and rotate it afterward.)
+4. Paste the generated key to the `POWERSHELL_GALLERY_KEY` variable on the [action secrets][github.secrets] section of GitHub settings.
+
+[github.secrets]: https://github.com/ForNeVeR/VerifyEncoding/settings/secrets/actions
+[powershell-gallery.api-keys]: https://www.powershellgallery.com/account/apikeys
