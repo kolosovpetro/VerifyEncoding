@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] (2.1.0)
+## [2.1.0] - 2025-04-08
 ### Changed
 - The project has been published to the PowerShell Gallery as a module.
 - The project has been renamed to VerifyEncoding (to correspond to the published module name).
@@ -37,7 +37,8 @@ This is the initial release as a separate project, after the script has been use
 
 The development has been started in 2020, the earlier history of the script could be [tracked via the xaml-math repository](https://github.com/ForNeVeR/xaml-math/commits/f5a0d9303825337d87f69250152620903c6a37ca/scripts/verify-encoding.ps1).
 
-[Unreleased]: https://github.com/ForNeVeR/verify-encoding/compare/v2.0.1...HEAD
+[Unreleased]: https://github.com/ForNeVeR/verify-encoding/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/ForNeVeR/verify-encoding/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/ForNeVeR/verify-encoding/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/ForNeVeR/verify-encoding/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/ForNeVeR/verify-encoding/releases/tag/v1.0.0
