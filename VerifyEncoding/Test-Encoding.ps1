@@ -134,15 +134,15 @@ function Test-Encoding
             $lf = "`n"
             $cr = "`r"
 
-            $hasWrongFileEndings = $text.Contains($crlf) -or $text.Contains($cr)
+            $hasWrongLineEndings = $text.Contains($crlf) -or $text.Contains($cr)
 
-            if ($hasWrongFileEndings -and $Autofix)
+            if ($hasWrongLineEndings -and $Autofix)
             {
                 $newText = $text -replace $crlf, $lf -replace $cr, $lf
                 [IO.File]::WriteAllText($fullPath, $newText)
                 Write-Output "Fixed the line endings for file $file"
             }
-            elseif ($hasWrongFileEndings)
+            elseif ($hasWrongLineEndings)
             {
                 $lineEndingErrors += @($file)
             }
