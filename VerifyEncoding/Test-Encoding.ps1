@@ -38,6 +38,7 @@ function Test-Encoding
     if (!$SourceRoot)
     {
         $SourceRoot = git rev-parse --show-toplevel
+
         if (!$?)
         {
             throw "Cannot call `"git rev-parse`": exit code $LASTEXITCODE."
@@ -49,32 +50,36 @@ function Test-Encoding
 
     try
     {
-        # run ci
         Push-Location $SourceRoot
+
         [array]$allFiles = git -c core.quotepath=off ls-tree -r HEAD --name-only
+
         if (!$?)
         {
             throw "Cannot call `"git ls-tree`": exit code $LASTEXITCODE."
         }
 
-#        $submodulesPath = "$SourceRoot/.gitmodules"
-#
-#        if (Test-Path $submodulesPath) {
-#            Write-Host "Filtering submodules ..."
-#            $submodules = (Get-Content $submodulesPath -Raw).Trim()
-#            $allFiles = $allFiles | Where-Object { $submodules -notmatch [Regex]::Escape($_) }
-#        }
+        # filter deleted files
+        $allFiles = $allFiles | Where-Object { (Test-Path -LiteralPath $_) -eq $True }
+
+        # filter folders from GIT submodules
+        $allFiles = $allFiles | Where-Object { (Get-Item -Force -LiteralPath $_).PSIsContainer -eq $False }
 
         $totalFiles = $allFiles.Length
+
         Write-Output "Total files in the repository: $totalFiles"
 
         $counter = [pscustomobject]@{ Value = 0 }
+
         $groupSize = 50
+
         [array]$chunks = $allFiles | Group-Object -Property { [math]::Floor($counter.Value++ / $groupSize) }
+
         Write-Output "Split into $( $chunks.Count ) chunks."
 
         # https://stackoverflow.com/questions/6119956/how-to-determine-if-git-handles-a-file-as-binary-or-as-text#comment15281840_6134127
         $nullHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
+
         $textFiles = $chunks | ForEach-Object {
             $chunk = $_.Group
             $filePaths = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @chunk
@@ -97,22 +102,6 @@ function Test-Encoding
         {
             if ($ExcludeExtensions -contains [IO.Path]::GetExtension($file).ToLowerInvariant())
             {
-                continue
-            }
-
-            $fileExists = Test-Path -Path $file
-
-            if ($fileExists -eq $False)
-            {
-                Write-Host "File $file is deleted. Skipping ..."
-                continue
-            }
-
-            $fileIsFolder = (Get-Item $file).PSIsContainer
-
-            if($fileIsFolder -eq $True)
-            {
-                Write-Host "File $file is folder. Skipping ..."
                 continue
             }
 
@@ -145,28 +134,15 @@ function Test-Encoding
             $lf = "`n"
             $cr = "`r"
 
-            $containsCrlf = $text.Contains($crlf)
+            $hasWrongFileEndings = $text.Contains($crlf) -or $text.Contains($cr)
 
-            if ($containsCrlf -and $Autofix)
+            if ($hasWrongFileEndings -and $Autofix)
             {
-                $newText = $text -replace $crlf, $lf
+                $newText = $text -replace $crlf, $lf -replace $cr, $lf
                 [IO.File]::WriteAllText($fullPath, $newText)
                 Write-Output "Fixed the line endings for file $file"
             }
-            elseif ($containsCrlf)
-            {
-                $lineEndingErrors += @($file)
-            }
-
-            $containsCr = $text.Contains($cr)
-
-            if ($containsCr -and $Autofix)
-            {
-                $newText = $text -replace $cr, $lf
-                [IO.File]::WriteAllText($fullPath, $newText)
-                Write-Output "Fixed the line endings for file $file"
-            }
-            elseif ($containsCr)
+            elseif ($hasWrongFileEndings)
             {
                 $lineEndingErrors += @($file)
             }
