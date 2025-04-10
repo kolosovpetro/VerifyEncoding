@@ -138,6 +138,10 @@ function Test-Encoding
     }
 }
 
-if ($MyInvocation.MyCommand.Name -eq 'Test-Encoding.ps1') {
+# Convenience launch mode when not invoked as part of a module:
+if (!$MyInvocation.PSCommandPath -or !$MyInvocation.PSCommandPath.EndsWith('.psm1')) {
+    Write-Output "Direct script launcher mode.$(if ($MyInvocation.PSCommandPath) {
+        ' Launched from "' + $MyInvocation.PSCommandPath + '".'
+    })"
     Test-Encoding -SourceRoot:$SourceRoot -Autofix:$Autofix -ExcludedExtensions:$ExcludeExtensions
 }

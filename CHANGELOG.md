@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased] (2.1.1)
+### Fixed
+- Script no longer gets invoked with default arguments after being imported.
+
 ## [2.1.0] - 2025-04-08
 ### Changed
 - The project has been published to the PowerShell Gallery as a module. Thanks to @kolosovpetro!
