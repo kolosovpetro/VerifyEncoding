@@ -49,6 +49,7 @@ function Test-Encoding
 
     try
     {
+        # run ci
         Push-Location $SourceRoot
         [array]$allFiles = git -c core.quotepath=off ls-tree -r HEAD --name-only
         if (!$?)
