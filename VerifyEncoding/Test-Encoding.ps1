@@ -57,13 +57,13 @@ function Test-Encoding
             throw "Cannot call `"git ls-tree`": exit code $LASTEXITCODE."
         }
 
-        $submodulesPath = "$SourceRoot/.gitmodules"
-
-        if (Test-Path $submodulesPath) {
-            Write-Host "Filtering submodules ..."
-            $submodules = (Get-Content $submodulesPath -Raw).Trim()
-            $allFiles = $allFiles | Where-Object { $submodules -notmatch [Regex]::Escape($_) }
-        }
+#        $submodulesPath = "$SourceRoot/.gitmodules"
+#
+#        if (Test-Path $submodulesPath) {
+#            Write-Host "Filtering submodules ..."
+#            $submodules = (Get-Content $submodulesPath -Raw).Trim()
+#            $allFiles = $allFiles | Where-Object { $submodules -notmatch [Regex]::Escape($_) }
+#        }
 
         $totalFiles = $allFiles.Length
         Write-Output "Total files in the repository: $totalFiles"
@@ -105,6 +105,14 @@ function Test-Encoding
             if ($fileExists -eq $False)
             {
                 Write-Host "File $file is deleted. Skipping ..."
+                continue
+            }
+
+            $fileIsFolder = (Get-Item $file).PSIsContainer
+
+            if($fileIsFolder -eq $True)
+            {
+                Write-Host "File $file is folder. Skipping ..."
                 continue
             }
 
