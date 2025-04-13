@@ -57,6 +57,31 @@ jobs:
 ```
 This command will generate a non-zero exit code in case there's a validation error and list all the files with issues.
 
+#### Renovate
+If you use [Renovate][renovate] to automatically manage dependencies on CI,
+you may set it up to update VerifyEncoding as well.
+If you have the previously recommended `Install-Module` command called in your CI setup script,
+then add the following into your `renovate.json`, and it will also update VerifyEncoding from the PowerShell Gallery:
+```json
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": "...",
+  "customManagers": [
+    {
+      "customType": "regex",
+      "fileMatch": [
+        "^\\.github/workflows/.+\\.yml$"
+      ],
+      "matchStrings": [
+        "Install-Module (?<depName>\\S+?) -RequiredVersion (?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "nuget",
+      "registryUrlTemplate": "https://www.powershellgallery.com/api/v2/"
+    }
+  ]
+}
+```
+
 Documentation
 -------------
 - [Changelog][docs.changelog]
@@ -77,5 +102,6 @@ The license indication in the project's sources is compliant with the [REUSE spe
 [docs.maintaining]: MAINTAINING.md
 [install.powershell-gallery]: https://www.powershellgallery.com/packages/VerifyEncoding
 [releases]: https://github.com/ForNeVeR/VerifyEncoding/releases
+[renovate]: https://docs.renovatebot.com/
 [reuse.spec]: https://reuse.software/spec-3.3/
 [status-terrid]: https://img.shields.io/badge/status-terrid-green.svg
