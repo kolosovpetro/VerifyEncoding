@@ -10,10 +10,16 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] (2.1.1)
+## [2.2.0] - 2025-04-13
 ### Fixed
 - Script no longer gets invoked with default arguments after being imported.
+- [#15: Fails on deleted files](https://github.com/ForNeVeR/VerifyEncoding/issues/15).
+- [#13: Breaks on submodules](https://github.com/ForNeVeR/VerifyEncoding/issues/13).
 - Correct reporting of text file count in repositories with only one text file.
+- Various weird issues that were happening when run on a repository with no text files.
+
+### Added
+- [#16](https://github.com/ForNeVeR/VerifyEncoding/issues/13): detection and automatic fix for the CR line ending.
 
 ## [2.1.0] - 2025-04-08
 ### Changed
@@ -35,14 +41,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Add new parameter: `-ExcludedExtensions`, with a list of file extensions to ignore during the check.
 
 ### Fixed
-- Fixed file list calculation if running from alternate source root.
+- Fixed file list calculation if running from an alternate source root.
 
 ## [1.0.0] - 2025-02-08
 This is the initial release as a separate project, after the script has been used in several repositories.
 
-The development has been started in 2020, the earlier history of the script could be [tracked via the xaml-math repository](https://github.com/ForNeVeR/xaml-math/commits/f5a0d9303825337d87f69250152620903c6a37ca/scripts/verify-encoding.ps1).
+The development was started in 2020,
+the earlier history of the script could be [tracked via the xaml-math repository](https://github.com/ForNeVeR/xaml-math/commits/f5a0d9303825337d87f69250152620903c6a37ca/scripts/verify-encoding.ps1).
 
-[Unreleased]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.1.0...HEAD
+[Unreleased]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.2.0...HEAD
+[2.2.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v1.0.0...v2.0.0

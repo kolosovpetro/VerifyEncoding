@@ -53,7 +53,7 @@ jobs:
     # […]
     - name: Verify encoding
       shell: pwsh
-      run: Install-Module VerifyEncoding -Repository PSGallery -Version 2.1.0 && Test-Encoding <parameters go here>
+      run: Install-Module VerifyEncoding -Repository PSGallery -Version 2.2.0 && Test-Encoding <parameters go here>
 ```
 This command will generate a non-zero exit code in case there's a validation error and list all the files with issues.
 
