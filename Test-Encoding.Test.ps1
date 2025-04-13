@@ -67,8 +67,8 @@ BeforeAll {
     }
 }
 
-Describe 'Test-Encoding function' {
-    It 'Should properly scan an empty file' {
+Describe 'Verification' {
+    It 'should properly scan an empty file' {
         $repoPath = PrepareGitRepo @{
             'empty-file.txt' = ''
         }
@@ -81,7 +81,7 @@ Describe 'Test-Encoding function' {
         )
     }
 
-    It 'Should properly work on submodules' {
+    It 'should properly work on submodules' {
         $mainRepoPath = PrepareGitRepo @{
             'empty-file.txt' = ''
         }
@@ -98,7 +98,7 @@ Describe 'Test-Encoding function' {
         )
     }
 
-    It 'Should still work if there are any files deleted' {
+    It 'should still work if there are any files deleted' {
         $repoPath = PrepareGitRepo @{
             'empty-file.txt' = ''
         }
@@ -109,5 +109,55 @@ Describe 'Test-Encoding function' {
             'Split into 0 chunks.'
             'Text files in the repository: 0'
         )
+    }
+}
+
+Describe 'Autofix' {
+    It 'should process all different sorts of line endings' {
+        $repoPath = PrepareGitRepo @{
+            'windows.txt' = "1`r`n2`r`n3`r`n"
+            'windows.trailing.txt' = "1`r`n2`r`n3"
+            'linux.txt' = "1`n2`n3`n"
+            'linux.trailing.txt' = "1`n2`n3"
+            'os9.txt' = "1`r2`r3"
+            'os9.trailing.txt' = "1`r2`r3`r"
+            'mixed.txt' = "1`r2`r`n3`n4"
+            'mixed.trailing.txt' = "1`r2`r`n3`n4`r`n"
+        }
+
+        function Assert-FileContent($path, $content) {
+            [IO.File]::ReadAllText($path) | Should -Be $content
+        }
+
+        Assert-FileContent "$repoPath/windows.txt" "1`r`n2`r`n3`r`n"
+        Assert-FileContent "$repoPath/windows.trailing.txt" "1`r`n2`r`n3"
+        Assert-FileContent "$repoPath/linux.txt" "1`n2`n3`n"
+        Assert-FileContent "$repoPath/linux.trailing.txt" "1`n2`n3"
+        Assert-FileContent "$repoPath/os9.txt" "1`r2`r3"
+        Assert-FileContent "$repoPath/os9.trailing.txt" "1`r2`r3`r"
+        Assert-FileContent "$repoPath/mixed.txt" "1`r2`r`n3`n4"
+        Assert-FileContent "$repoPath/mixed.trailing.txt" "1`r2`r`n3`n4`r`n"
+
+        $output = Test-Encoding -SourceRoot $repoPath -Autofix
+        $output | Should -Be @(
+            'Total files in the repository: 8'
+            'Split into 1 chunks.'
+            'Text files in the repository: 8'
+            'Fixed the line endings for file mixed.trailing.txt'
+            'Fixed the line endings for file mixed.txt'
+            'Fixed the line endings for file os9.trailing.txt'
+            'Fixed the line endings for file os9.txt'
+            'Fixed the line endings for file windows.trailing.txt'
+            'Fixed the line endings for file windows.txt'
+        )
+
+        Assert-FileContent "$repoPath/windows.txt" "1`n2`n3`n"
+        Assert-FileContent "$repoPath/windows.trailing.txt" "1`n2`n3"
+        Assert-FileContent "$repoPath/linux.txt" "1`n2`n3`n"
+        Assert-FileContent "$repoPath/linux.trailing.txt" "1`n2`n3"
+        Assert-FileContent "$repoPath/os9.txt" "1`n2`n3"
+        Assert-FileContent "$repoPath/os9.trailing.txt" "1`n2`n3`n"
+        Assert-FileContent "$repoPath/mixed.txt" "1`n2`n3`n4"
+        Assert-FileContent "$repoPath/mixed.trailing.txt" "1`n2`n3`n4`n"
     }
 }
