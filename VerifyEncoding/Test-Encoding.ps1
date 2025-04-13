@@ -52,35 +52,33 @@ function Test-Encoding
     {
         Push-Location $SourceRoot
 
-        [array]$allFiles = git -c core.quotepath=off ls-tree -r HEAD --name-only
+        $allFiles = @(
+            git -c core.quotepath=off ls-tree -r HEAD --name-only
+            # filter deleted files:
+            | Where-Object { (Test-Path -LiteralPath $_) -eq $True }
+            # filter folders from GIT submodules
+            | Where-Object { (Get-Item -Force -LiteralPath $_).PSIsContainer -eq $False }
+        )
 
         if (!$?)
         {
             throw "Cannot call `"git ls-tree`": exit code $LASTEXITCODE."
         }
 
-        # filter deleted files
-        $allFiles = $allFiles | Where-Object { (Test-Path -LiteralPath $_) -eq $True }
-
-        # filter folders from GIT submodules
-        $allFiles = $allFiles | Where-Object { (Get-Item -Force -LiteralPath $_).PSIsContainer -eq $False }
-
-        $totalFiles = $allFiles.Length
-
-        Write-Output "Total files in the repository: $totalFiles"
+        Write-Output "Total files in the repository: $($allFiles.Length)"
 
         $counter = [pscustomobject]@{ Value = 0 }
 
         $groupSize = 50
 
-        [array]$chunks = $allFiles | Group-Object -Property { [math]::Floor($counter.Value++ / $groupSize) }
+        $chunks = @($allFiles | Group-Object -Property { [math]::Floor($counter.Value++ / $groupSize) })
 
         Write-Output "Split into $( $chunks.Count ) chunks."
 
         # https://stackoverflow.com/questions/6119956/how-to-determine-if-git-handles-a-file-as-binary-or-as-text#comment15281840_6134127
         $nullHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
 
-       [array] $textFiles = $chunks | ForEach-Object {
+        $textFiles = @($chunks | ForEach-Object {
             $chunk = $_.Group
             $filePaths = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @chunk
             if (!$?)
@@ -90,7 +88,7 @@ function Test-Encoding
             $filePaths |
                 Where-Object { -not $_.StartsWith('-') } |
                 ForEach-Object { [Regex]::Unescape($_.Split("`t", 3)[2]) }
-        }
+        })
 
         Write-Output "Text files in the repository: $( $textFiles.Length )"
 
