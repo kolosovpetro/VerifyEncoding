@@ -13,13 +13,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [2.2.0] - 2025-04-13
 ### Fixed
 - Script no longer gets invoked with default arguments after being imported.
-- [#15: Fails on deleted files](https://github.com/ForNeVeR/VerifyEncoding/issues/15).
-- [#13: Breaks on submodules](https://github.com/ForNeVeR/VerifyEncoding/issues/13).
+- [#15: Fails on deleted files](https://github.com/ForNeVeR/VerifyEncoding/issues/15). Thanks to @kolosovpetro!
+- [#13: Breaks on submodules](https://github.com/ForNeVeR/VerifyEncoding/issues/13). Thanks to @kolosovpetro!
 - Correct reporting of text file count in repositories with only one text file.
 - Various weird issues that were happening when run on a repository with no text files.
 
 ### Added
-- [#16](https://github.com/ForNeVeR/VerifyEncoding/issues/13): detection and automatic fix for the CR line ending.
+- [#16](https://github.com/ForNeVeR/VerifyEncoding/issues/13): detection and automatic fix for the CR line ending. Thanks to @kolosovpetro!
 
 ## [2.1.0] - 2025-04-08
 ### Changed
