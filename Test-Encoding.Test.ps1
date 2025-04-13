@@ -97,4 +97,17 @@ Describe 'Test-Encoding function' {
             'Text files in the repository: 2'
         )
     }
+
+    It 'Should still work if there are any files deleted' {
+        $repoPath = PrepareGitRepo @{
+            'empty-file.txt' = ''
+        }
+        Remove-Item -LiteralPath "$repoPath/empty-file.txt"
+        $output = Test-Encoding -SourceRoot $repoPath
+        $output | Should -Be @(
+            'Total files in the repository: 0'
+            'Split into 0 chunks.'
+            'Text files in the repository: 0'
+        )
+    }
 }
