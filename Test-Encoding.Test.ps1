@@ -46,6 +46,25 @@ BeforeAll {
 
         $repoPath
     }
+
+    function Add-Submodule($mainRepo, $submoduleRepo, $submoduleDirectory) {
+        Push-Location -LiteralPath $mainRepoPath
+        try {
+            git -c protocol.file.allow=always submodule add $additionalRepoPath $submoduleDirectory | Out-Host
+            if (!$?) {
+                throw "Error code from git submodule: $LASTEXITCODE."
+            }
+            git -c 'user.name=Test User' `
+                -c 'user.email=test@example.com' `
+                commit --all --message 'Add a submodule' | Out-Host
+            if (!$?)
+            {
+                throw "Error code from git commit: $LASTEXITCODE."
+            }
+        } finally {
+            Pop-Location
+        }
+    }
 }
 
 Describe 'Test-Encoding function' {
@@ -59,6 +78,23 @@ Describe 'Test-Encoding function' {
             'Total files in the repository: 1'
             'Split into 1 chunks.'
             'Text files in the repository: 1'
+        )
+    }
+
+    It 'Should properly work on submodules' {
+        $mainRepoPath = PrepareGitRepo @{
+            'empty-file.txt' = ''
+        }
+        $additionalRepoPath = PrepareGitRepo @{
+            'empty-file.txt' = ''
+        }
+        Add-Submodule $mainRepoPath $additionalRepoPath 'test-submodule'
+
+        $output = Test-Encoding -SourceRoot $mainRepoPath
+        $output | Should -Be @(
+            'Total files in the repository: 2'
+            'Split into 1 chunks.'
+            'Text files in the repository: 2'
         )
     }
 }
