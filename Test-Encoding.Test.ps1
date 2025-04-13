@@ -58,7 +58,7 @@ Describe 'Test-Encoding function' {
         $output | Should -Be @(
             'Total files in the repository: 1'
             'Split into 1 chunks.'
-            'Text files in the repository: 14'
+            'Text files in the repository: 1'
         )
     }
 }
