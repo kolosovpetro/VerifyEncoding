@@ -24,7 +24,7 @@ function Update-VersionInModuleManifest {
 function Update-VersionInReadme {
     $readMeFilePath = "$RepositoryRoot/README.md"
     $oldContent = Get-Content -LiteralPath $readMeFilePath -Raw
-    $content = $oldContent -Replace "-Version (?:.*?) ", "-Version $NewVersion "
+    $content = $oldContent -Replace "-RequiredVersion (?:.*?) ", "-RequiredVersion $NewVersion "
 
     if ($oldContent -eq $content) {
         throw "Unable to update version in file `"$readMeFilePath`"."
