@@ -64,7 +64,7 @@ function Test-Encoding
 
         # https://stackoverflow.com/questions/6119956/how-to-determine-if-git-handles-a-file-as-binary-or-as-text#comment15281840_6134127
         $nullHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904'
-        $textFiles = $chunks | ForEach-Object {
+        [array] $textFiles = $chunks | ForEach-Object {
             $chunk = $_.Group
             $filePaths = git -c core.quotepath=off diff --numstat $nullHash HEAD -- @chunk
             if (!$?)

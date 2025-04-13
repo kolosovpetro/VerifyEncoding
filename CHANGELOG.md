@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [Unreleased] (2.1.1)
 ### Fixed
 - Script no longer gets invoked with default arguments after being imported.
+- Correct reporting of text file count in repositories with only one text file.
 
 ## [2.1.0] - 2025-04-08
 ### Changed
