@@ -52,13 +52,14 @@ function Test-Encoding
     {
         Push-Location $SourceRoot
 
-        $allFiles = @(
-            git -c core.quotepath=off ls-tree -r HEAD --name-only
-            # filter deleted files:
-            | Where-Object { (Test-Path -LiteralPath $_) -eq $True }
-            # filter folders from GIT submodules
-            | Where-Object { (Get-Item -Force -LiteralPath $_).PSIsContainer -eq $False }
-        )
+        # Step 1: Get all file paths from git
+        $gitFiles = git -c core.quotepath=off ls-tree -r HEAD --name-only
+
+        # Step 2: Filter out deleted files
+        $existingFiles = $gitFiles | Where-Object { Test-Path -LiteralPath $_ }
+
+        # Step 3: Filter out directories (keep only files)
+        $allFiles = @($existingFiles | Where-Object { -not (Get-Item -Force -LiteralPath $_).PSIsContainer })
 
         if (!$?)
         {
