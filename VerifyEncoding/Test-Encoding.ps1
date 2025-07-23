@@ -122,7 +122,8 @@ function Test-Encoding
 
                 if ($fullContent.Count -le $bom.Length)
                 {
-                    Write-Output "Skipping empty file with only BOM character: $file ..."
+                    Write-Output "Patching the empty file with only BOM character: $file ..."
+                    [IO.File]::WriteAllBytes($fullPath, @())
                     continue
                 }
 
