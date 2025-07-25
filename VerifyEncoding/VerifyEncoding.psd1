@@ -5,7 +5,7 @@
 # REUSE-IgnoreStart
 @{
     RootModule = 'VerifyEncoding.psm1'
-    ModuleVersion = '2.2.0'
+    ModuleVersion = '2.2.1'
     GUID = 'b7e60ad7-bfa0-43fa-a7b6-3a06de3f8f74'
     Author = 'VerifyEncoding contributors'
     CompanyName = 'VerifyEncoding contributors'

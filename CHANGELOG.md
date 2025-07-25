@@ -10,6 +10,10 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.1] - 2025-07-26
+### Fixed
+- [#29](https://github.com/ForNeVeR/VerifyEncoding/issues/29): Error if a file contains only BOM character. Thanks to @kolosovpetro!
+
 ## [2.2.0] - 2025-04-13
 ### Fixed
 - Script no longer gets invoked with default arguments after being imported.
@@ -49,7 +53,8 @@ This is the initial release as a separate project, after the script has been use
 The development was started in 2020,
 the earlier history of the script could be [tracked via the xaml-math repository](https://github.com/ForNeVeR/xaml-math/commits/f5a0d9303825337d87f69250152620903c6a37ca/scripts/verify-encoding.ps1).
 
-[Unreleased]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.2.0...HEAD
+[Unreleased]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.2.1...HEAD
+[2.2.1]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.0.0...v2.0.1
