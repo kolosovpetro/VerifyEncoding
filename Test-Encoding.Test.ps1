@@ -23,7 +23,7 @@ BeforeAll {
             foreach ($fileName in $files.Keys)
             {
                 $text = $files[$fileName]
-                Set-Content -LiteralPath $fileName -Value $text -NoNewline
+                Set-Content -LiteralPath $fileName -Value $text -NoNewline -Encoding utf8
                 git add $fileName
                 if (!$?)
                 {
@@ -64,6 +64,15 @@ BeforeAll {
         } finally {
             Pop-Location
         }
+    }
+
+    function Assert-FileContent($path, $content) {
+        # This is to read UTF-8 BOM correctly:
+        $bytes = [IO.File]::ReadAllBytes($path)
+        $string = [Text.Encoding]::UTF8.GetString($bytes)
+
+        $string | Should -Be $content
+        $string.Length | Should -Be $content.Length # compare length since the comparison above won't trigger on BOM
     }
 }
 
@@ -125,10 +134,6 @@ Describe 'Autofix' {
             'mixed.trailing.txt' = "1`r2`r`n3`n4`r`n"
         }
 
-        function Assert-FileContent($path, $content) {
-            [IO.File]::ReadAllText($path) | Should -Be $content
-        }
-
         Assert-FileContent "$repoPath/windows.txt" "1`r`n2`r`n3`r`n"
         Assert-FileContent "$repoPath/windows.trailing.txt" "1`r`n2`r`n3"
         Assert-FileContent "$repoPath/linux.txt" "1`n2`n3`n"
@@ -159,5 +164,24 @@ Describe 'Autofix' {
         Assert-FileContent "$repoPath/os9.trailing.txt" "1`n2`n3`n"
         Assert-FileContent "$repoPath/mixed.txt" "1`n2`n3`n4"
         Assert-FileContent "$repoPath/mixed.trailing.txt" "1`n2`n3`n4`n"
+    }
+
+    It 'should empty a file with BOM only' {
+        $bom = [System.Text.Encoding]::UTF8.GetString(@(0xEF, 0xBB, 0xBF))
+        $repoPath = PrepareGitRepo @{
+            'bom.txt' = $bom
+        }
+
+        Assert-FileContent "$repoPath/bom.txt" $bom
+
+        $output = Test-Encoding -SourceRoot $repoPath -Autofix
+        $output | Should -Be @(
+            'Total files in the repository: 1'
+            'Split into 1 chunks.'
+            'Text files in the repository: 1'
+            'Removed UTF-8 BOM from file bom.txt'
+        )
+
+        Assert-FileContent "$repoPath/bom.txt" ''
     }
 }

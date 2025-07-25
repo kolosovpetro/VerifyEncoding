@@ -122,7 +122,7 @@ function Test-Encoding
 
                 if ($fullContent.Count -le $bom.Length)
                 {
-                    Write-Output "Patching the empty file with only BOM character: $file ..."
+                    Write-Output "Removed UTF-8 BOM from file $file"
                     [IO.File]::WriteAllBytes($fullPath, @())
                     continue
                 }
