@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
+# SPDX-FileCopyrightText: 2025-2026 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
 #
 # SPDX-License-Identifier: MIT
 
@@ -7,6 +7,7 @@ on:
   push:
     branches:
     - main
+    - 'renovate/**'
   pull_request:
     branches:
     - main
