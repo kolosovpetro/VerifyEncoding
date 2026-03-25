@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2025 Friedrich von Never <friedrich@fornever.me>
+SPDX-FileCopyrightText: 2025-2026 Friedrich von Never <friedrich@fornever.me>
 
 SPDX-License-Identifier: MIT
 -->
@@ -10,7 +10,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.3.0] - 2026-03-25
 ### Added
 - [#43](https://github.com/ForNeVeR/VerifyEncoding/issues/43): new parameter `-ExcludePatterns` accepting an array of glob patterns to exclude files from checks.
 
@@ -57,7 +57,8 @@ This is the initial release as a separate project, after the script has been use
 The development was started in 2020,
 the earlier history of the script could be [tracked via the xaml-math repository](https://github.com/ForNeVeR/xaml-math/commits/f5a0d9303825337d87f69250152620903c6a37ca/scripts/verify-encoding.ps1).
 
-[Unreleased]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.2.1...HEAD
+[Unreleased]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.3.0...HEAD
+[2.3.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.2.1...v2.3.0
 [2.2.1]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/ForNeVeR/VerifyEncoding/compare/v2.0.1...v2.1.0

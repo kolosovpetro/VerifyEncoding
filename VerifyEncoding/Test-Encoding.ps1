@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2020-2025 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
+# SPDX-FileCopyrightText: 2020-2026 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
 #
 # SPDX-License-Identifier: MIT
 

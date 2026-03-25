@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2025 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
+SPDX-FileCopyrightText: 2025-2026 VerifyEncoding contributors <https://github.com/ForNeVeR/VerifyEncoding>
 
 SPDX-License-Identifier: MIT
 -->
@@ -54,7 +54,7 @@ jobs:
     # […]
     - name: Verify encoding
       shell: pwsh
-      run: Install-Module VerifyEncoding -Repository PSGallery -RequiredVersion 2.2.1 -Force && Test-Encoding <parameters go here>
+      run: Install-Module VerifyEncoding -Repository PSGallery -RequiredVersion 2.3.0 -Force && Test-Encoding <parameters go here>
 ```
 This command will generate a non-zero exit code in case there's a validation error and list all the files with issues.
 
