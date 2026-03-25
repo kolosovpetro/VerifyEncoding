@@ -23,6 +23,8 @@ BeforeAll {
             foreach ($fileName in $files.Keys)
             {
                 $text = $files[$fileName]
+                $dir = Split-Path -Parent $fileName
+                if ($dir) { New-Item -Type Directory -Force $dir | Out-Null }
                 Set-Content -LiteralPath $fileName -Value $text -NoNewline -Encoding utf8
                 git add $fileName
                 if (!$?)
@@ -183,5 +185,73 @@ Describe 'Autofix' {
         )
 
         Assert-FileContent "$repoPath/bom.txt" ''
+    }
+}
+
+Describe 'ExcludePatterns' {
+    It 'should exclude files matching a simple glob pattern' {
+        $bom = [System.Text.Encoding]::UTF8.GetString(@(0xEF, 0xBB, 0xBF))
+        $repoPath = PrepareGitRepo @{
+            'Foo.Designer.cs' = $bom
+            'Foo.cs'          = $bom
+        }
+
+        { Test-Encoding -SourceRoot $repoPath -ExcludePatterns '*.Designer.cs' } | Should -Throw '*Foo.cs*'
+    }
+
+    It 'should work additively with -ExcludeExtensions' {
+        $bom = [System.Text.Encoding]::UTF8.GetString(@(0xEF, 0xBB, 0xBF))
+        $repoPath = PrepareGitRepo @{
+            'Foo.Designer.cs' = $bom
+            'Foo.cs'          = $bom
+            'Foo.txt'         = $bom
+        }
+
+        # Exclude .txt via extension, exclude *.Designer.cs via pattern — only Foo.cs should remain and trigger an error
+        { Test-Encoding -SourceRoot $repoPath -ExcludeExtensions '.txt' -ExcludePatterns '*.Designer.cs' } | Should -Throw '*Foo.cs*'
+    }
+
+    It 'should work when a single string is passed instead of an array' {
+        $bom = [System.Text.Encoding]::UTF8.GetString(@(0xEF, 0xBB, 0xBF))
+        $repoPath = PrepareGitRepo @{
+            'Foo.Designer.cs' = $bom
+            'Foo.cs'          = ''
+        }
+
+        # Single string (not wrapped in @()) — Foo.Designer.cs excluded, Foo.cs is clean
+        $output = Test-Encoding -SourceRoot $repoPath -ExcludePatterns '*.Designer.cs'
+        $output | Should -Be @(
+            'Total files in the repository: 2'
+            'Split into 1 chunks.'
+            'Text files in the repository: 2'
+        )
+    }
+
+    It 'should exclude files in a specific directory matched by a relative glob pattern' {
+        $bom = [System.Text.Encoding]::UTF8.GetString(@(0xEF, 0xBB, 0xBF))
+        $repoPath = PrepareGitRepo @{
+            'foo/Foo.Designer.cs' = $bom
+            'foo/Foo.cs'          = ''
+        }
+
+        # foo/Foo.Designer.cs excluded by pattern, foo/Foo.cs is clean — no errors expected
+        $output = Test-Encoding -SourceRoot $repoPath -ExcludePatterns 'foo/*.Designer.cs'
+        $output | Should -Be @(
+            'Total files in the repository: 2'
+            'Split into 1 chunks.'
+            'Text files in the repository: 2'
+        )
+    }
+
+    It 'should not exclude files in directories whose names merely contain the pattern prefix' {
+        $bom = [System.Text.Encoding]::UTF8.GetString(@(0xEF, 0xBB, 0xBF))
+        $repoPath = PrepareGitRepo @{
+            'foo/Foo.Designer.cs'  = $bom  # should be excluded
+            'afoo/Foo.Designer.cs' = $bom  # should NOT be excluded — wrong directory
+        }
+
+        # Pattern anchors to 'foo/', so 'afoo/Foo.Designer.cs' is not excluded and triggers an error
+        { Test-Encoding -SourceRoot $repoPath -ExcludePatterns 'foo/*.Designer.cs' } |
+            Should -Throw '*afoo/Foo.Designer.cs*'
     }
 }

@@ -20,14 +20,14 @@ $ Install-Module VerifyEncoding -Repository PSGallery -Scope CurrentUser
 Then use as a PowerShell function:
 ```
 $ Import-Module VerifyEncoding
-$ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
+$ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>] [[-ExcludePatterns] <String[]>]
 ```
 
 #### Option 2: Quick Script Deployment
 Copy the `VerifyEncoding/Test-Encoding.ps1` script to your repo (or get from [the Releases section][releases]),
 then use from any shell as
 ```console
-$ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
+$ pwsh Test-Encoding.ps1 [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>] [[-ExcludePatterns] <String[]>]
 ```
 
 #### Option 3: Deploy Module From Sources
@@ -35,13 +35,14 @@ Either clone the sources or download the latest module archive from [the Release
 and then run the following PowerShell commands:
 ```console
 $ Import-Module ./VerifyEncoding/VerifyEncoding.psd1
-$ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>]
+$ Test-Encoding [[-SourceRoot] <SourceRoot>] [-Autofix] [[-ExcludeExtensions] <String[]>] [[-ExcludePatterns] <String[]>]
 ```
 
 ### Parameters
 - `SourceRoot` is the directory where the script will look for the files. By default (if nothing's passed), the script will try auto-detecting the nearest Git root.
 - `-Autofix` will apply fixes to all the problematic files.
 - `-ExcludeExtensions` allows passing an array of file extensions (case-insensitive) that will be ignored during the check. The default list is `@('.dotsettings')`
+- `-ExcludePatterns` allows passing an array of glob patterns for files to ignore. Each pattern is matched against both the file's name and its relative path within the repository (e.g. `*.Designer.cs` or `foo/*.Designer.cs`). By default, the list is empty.
 
 ### CI
 Add the following block to your CI script (here I'll use GitHub Actions, but it's possible to adapt to any other CI provider):

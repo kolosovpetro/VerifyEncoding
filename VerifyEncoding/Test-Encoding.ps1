@@ -12,7 +12,8 @@ param (
     [switch] $Autofix,
     [string[]] $ExcludeExtensions = @(
         '.dotsettings'
-    )
+    ),
+    [string[]] $ExcludePatterns = @()
 )
 
 function Test-Encoding
@@ -29,7 +30,11 @@ function Test-Encoding
         # List of file extensions (with leading dots) to ignore. Case-insensitive.
         [string[]] $ExcludeExtensions = @(
             '.dotsettings'
-        )
+        ),
+
+        # List of glob patterns to ignore. Matched against both the leaf file name and the full relative path.
+        # For example, '*.Designer.cs' will exclude all files whose name ends in '.Designer.cs'.
+        [string[]] $ExcludePatterns = @()
     )
 
     Set-StrictMode -Version Latest
@@ -100,6 +105,12 @@ function Test-Encoding
         foreach ($file in $textFiles)
         {
             if ($ExcludeExtensions -contains [IO.Path]::GetExtension($file).ToLowerInvariant())
+            {
+                continue
+            }
+
+            $leafName = [IO.Path]::GetFileName($file)
+            if ($ExcludePatterns | Where-Object { $leafName -like $_ -or $file -like $_ })
             {
                 continue
             }
@@ -176,5 +187,5 @@ if (!$MyInvocation.PSCommandPath -or !$MyInvocation.PSCommandPath.EndsWith('.psm
     Write-Output "Direct script launcher mode.$(if ($MyInvocation.PSCommandPath) {
         ' Launched from "' + $MyInvocation.PSCommandPath + '".'
     })"
-    Test-Encoding -SourceRoot:$SourceRoot -Autofix:$Autofix -ExcludedExtensions:$ExcludeExtensions
+    Test-Encoding -SourceRoot:$SourceRoot -Autofix:$Autofix -ExcludeExtensions:$ExcludeExtensions -ExcludePatterns:$ExcludePatterns
 }
